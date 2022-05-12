@@ -119,7 +119,7 @@ class AWSConfigurer():
     def __aws_export_profile(self, aws_account):
         export_aws_profile = f'export AWS_PROFILE={aws_account}'
         copy_to_clipboard(export_aws_profile)
-        print(f'Set default profile with (already copied to clipboard):\n\n{export_aws_profile}\n')
+        print(f'Copied to clipboard: {export_aws_profile}')
 
     def configure(self, aws_account, aws_account_id, aws_role, saml):
         self.__aws_configure_profile(aws_account)
