@@ -63,8 +63,7 @@ class AWSAccountsDOMParser:
                 account_label = self.parser.get_outer_html(account_label_node_id + 1)
                 account_name, account_id = self.__parse_account_label(account_label)
                 if account_name is not None and account_id is not None:
-                    account_role_node_ids = self.parser.query_selector_all(account_node_id,
-                                                                           'div .saml-role-description')
+                    account_role_node_ids = self.parser.query_selector_all(account_node_id, 'div .saml-role-description')
                     for account_role_node_id in account_role_node_ids:
                         account_role_name = self.parser.get_outer_html(account_role_node_id + 1)
                         accounts.append(AWSAccount(account_name, account_id, account_role_name))
