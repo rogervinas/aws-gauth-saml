@@ -1,5 +1,7 @@
 # AWS Google Give Me Credentials
 
+![aws-google-gimme-creds](doc/aws-google-gimme-creds.gif)
+
 ## Use
 
 * Configure AWS_LOGIN_URL, for example for Google:
@@ -22,6 +24,19 @@
 * Execute **aws-google-gimme-creds** script:
   ```shell
   python3 aws-google-gimme-creds.py
+  
+  python3 aws-google-gimme-creds.py --account dev --role power
+  ```
+
+* Optional arguments:
+  ```
+  -h, --help            show this help message and exit
+  -a ACCOUNT_MATCHER, --account ACCOUNT_MATCHER
+                        Account name substring to match
+  -r ROLE_MATCHER, --role ROLE_MATCHER
+                        Role name substring to match
+  -g REGION_MATCHER, --region REGION_MATCHER
+                        Region name substring to match
   ```
 
 ## References
@@ -31,7 +46,6 @@
 ## ToDo
 * Tests
 * Error handling
-* Choose account/role/region from command-line
 * Compatibility with other systems (Windows, Linux)
 * Chrome docker container
 * Python package
