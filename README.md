@@ -25,7 +25,7 @@
   ```shell
   python3 aws-google-gimme-creds.py
   
-  python3 aws-google-gimme-creds.py --account dev --role power
+  python3 aws-google-gimme-creds.py -a dev -r power
   ```
 
 * Optional arguments:
