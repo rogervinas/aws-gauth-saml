@@ -4,7 +4,7 @@
 
 ## Use
 
-* Configure AWS_LOGIN_URL, for example for Google:
+* Configure AWS_LOGIN_URL, for example:
   ```shell
   export AWS_LOGIN_URL=https://accounts.google.com/o/saml2/initsso?idpid=XXXX&spid=XXXX&forceauthn=false
   ```
