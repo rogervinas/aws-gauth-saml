@@ -26,6 +26,8 @@
   python3 aws-google-gimme-creds.py
   
   python3 aws-google-gimme-creds.py -a dev -r power
+  
+  python3 aws-google-gimme-creds.py -a dev -r power -g oregon
   ```
 
 * Optional arguments:
