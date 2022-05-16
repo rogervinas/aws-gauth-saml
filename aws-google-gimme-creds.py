@@ -11,7 +11,7 @@ class SubstringMatcher:
         self.__substring = substring
 
     def matches(self, string):
-        return self.__substring is None or self.__substring in string
+        return self.__substring is None or self.__substring.lower() in string.lower()
 
 
 class DOMParser:
@@ -31,6 +31,13 @@ class DOMParser:
 
     def get_outer_html(self, node_id):
         return self.tab.call_method("DOM.getOuterHTML", nodeId=node_id)['outerHTML']
+
+
+class AWSRegion:
+    def __init__(self, code, name):
+        self.code = code
+        self.name = name
+        self.display_name = f'{self.code} - {self.name}'
 
 
 class AWSAccounts:
@@ -116,8 +123,8 @@ class AWSConfigurer():
             print(f'Please select region for {account}:')
             region = choose_region(region_matcher)
             if region is not None:
-                print(f'Configuring region {region} for {account} ...')
-                os.system(f'aws configure set region "{region}" --profile "{account}"')
+                print(f'Configuring region {region.code} for {account} ...')
+                os.system(f'aws configure set region "{region.code}" --profile "{account}"')
             else:
                 print('WARNING: No region found matching criteria')
 
@@ -155,36 +162,38 @@ def choose_option(options, options_to_display=None):
 
 def choose_region(region_matcher):
     regions_to_choose = list(filter(
-        lambda region: region_matcher.matches(region),
+        lambda region: region_matcher.matches(region.display_name),
         [
-            "us-east-2",
-            "us-east-1",
-            "us-west-1",
-            "us-west-2",
-            "af-south-1",
-            "ap-east-1",
-            "ap-south-1",
-            "ap-northeast-3",
-            "ap-northeast-2",
-            "ap-southeast-1",
-            "ap-southeast-2",
-            "ap-northeast-1",
-            "ca-central-1",
-            "cn-north-1",
-            "cn-northwest-1",
-            "eu-central-1",
-            "eu-west-1",
-            "eu-west-2",
-            "eu-west-3",
-            "eu-north-1",
-            "eu-south-1",
-            "me-south-1",
-            "sa-east-1",
-            "us-gov-west-1",
-            "us-gov-east-1"
+            AWSRegion(code='us-east-2', name='US East - Ohio'),
+            AWSRegion(code='us-east-1', name='US East - N. Virginia'),
+            AWSRegion(code='us-west-1', name='US West - N. California'),
+            AWSRegion(code='us-west-2', name='US West - Oregon'),
+            AWSRegion(code='af-south-1', name='Africa - Cape Town'),
+            AWSRegion(code='ap-east-1', name='Asia Pacific - Hong Kong'),
+            AWSRegion(code='ap-southeast-3', name='Asia Pacific - Jakarta'),
+            AWSRegion(code='ap-south-1', name='Asia Pacific - Mumbai'),
+            AWSRegion(code='ap-northeast-3', name='Asia Pacific - Osaka'),
+            AWSRegion(code='ap-northeast-2', name='Asia Pacific - Seoul'),
+            AWSRegion(code='ap-southeast-1', name='Asia Pacific - Singapore'),
+            AWSRegion(code='ap-southeast-2', name='Asia Pacific - Sydney'),
+            AWSRegion(code='ap-northeast-1', name='Asia Pacific - Tokyo'),
+            AWSRegion(code='ca-central-1', name='Canada - Central'),
+            AWSRegion(code='eu-central-1', name='Europe - Frankfurt'),
+            AWSRegion(code='eu-west-1', name='Europe - Ireland'),
+            AWSRegion(code='eu-west-2', name='Europe - London'),
+            AWSRegion(code='eu-west-3', name='Europe - Paris'),
+            AWSRegion(code='eu-north-1', name='Europe - Stockholm'),
+            AWSRegion(code='eu-south-1', name='Europe - Milan'),
+            AWSRegion(code='me-south-1', name='Middle East - Bahrain'),
+            AWSRegion(code='sa-east-1', name='South America - São Paulo'),
+            AWSRegion(code='us-gov-west-1', name='GovCloud - US-East'),
+            AWSRegion(code='us-gov-east-1', name='GovCloud - US-West')
         ]
     ))
-    return choose_option(regions_to_choose)
+    return choose_option(
+        regions_to_choose,
+        map(lambda it: it.display_name, regions_to_choose)
+    )
 
 
 def choose_account(accounts, account_matcher, role_matcher):
